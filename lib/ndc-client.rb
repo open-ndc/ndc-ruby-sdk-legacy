@@ -16,6 +16,3 @@ messages_path = "#{File.dirname(__FILE__)}/ndc-client/messages/*.rb"
 Dir[messages_path].each {|file|
   require file
 }
-
-# Dev
-require "pry"
