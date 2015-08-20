@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
 
-  gem.add_dependency "savon"
+  gem.add_dependency "savon", git: 'https://github.com/xurde/savon'
+  gem.add_dependency "nori", git: 'https://github.com/xurde/nori'
 
   # Dev
-  gem.add_development_dependency "pry"
   gem.add_development_dependency "minitest"
 end
