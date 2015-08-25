@@ -1,81 +1,49 @@
-# Bronto
+# NDC Ruby SDK
 
-This is a handy library that wraps the Bronto SOAP API.
+This is a Ruby gem that wrapps any NDC-compliant API.
+It's host-agnostic and somehow flexible-through-configuration so that it can point any NDC host and using several routig/wrapping level protocols, such as SOAP or REST. 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this to your Gemfile:
 
-    gem 'bronto'
+    gem "ndc-client", :git => 'https://github.com/flyiin/ndc-ruby-sdk'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install bronto
+Then `bundle`
 
 ## Usage
 
-Let's setup some contacts, add them to a list, and then send them a message.
-
-1. Require the library and specify the API Key on the Base class:
+1. Require the library
 
     ```
-    require 'bronto'
-    Bronto::Base.api_key = "..."
-    ```
-
-2. Create two contacts:
+    require 'ndc-client'
 
     ```
-    contact_1 = Bronto::Contact.new(email: "test_1@example.com")
-    contact_2 = Bronto::Contact.new(email: "test_2@example.com")
 
-    puts contact_1.id
-    # => nil
+2. Create a client instance using a valid NDC config
+ 
+YAML config:
+    ```
+    provider:
+        iata-code: AA
+        label: American Airlines
 
-    puts contact_2.id
-    # => nil
-
-    # You can save multiple objects with one API call using the class `save` method.
-    Bronto::Contact.save(contact_1, contact_2)
-
-    # Both contacts should now have ids.
-    puts contact_1.id
-    # => "32da24c..."
-
-    puts contact_2.id
-    # => "98cd453..."
+    options:
+        travelAgency:
+        name: Flyiin
+        agencyID: test agent
+        IATA_Number: '0000XXXX'
     ```
 
-3. Create a list and the contacts:
-
     ```
-    list = Bronto::List.new(name: "A Test List", label: "This is a test list.")
-    list.save
-
-    list.add_to_list(contact_1, contact_2)
+    config = YAML.load('config/ndc.yml')
+    ndc_client = NDCClient::Base.new(config)
+    query_params = {departure_airport_code: 'JFK', arrival_airport_code: 'LHR', departure_date: '2015-09-01'} 
+    ndc_response = ndc_client.request(:AirShopping, query_params)
     ```
 
-4. Create a new message and add content:
+This should deliver a valid set of NDC Offers if the config is OK.
 
-    ```
-    message = Bronto::Message.new(name: "Test Message")
-    message.add_content("html", "HTML Subject", "HTML Content")
-    message.add_content("text", "Text Subject", "Text Content")
-    message.save
-    ```
-
-5. Create a new delivery with a message and recipients and send it ASAP:
-
-    ```
-    delivery = Bronto::Delivery.new(start: Time.now, type: "normal", from_name: "Test", from_email: "test@example.com")
-    delivery.message_id = message.id
-    delivery.add_recipient(list)
-    delivery.save
-    ```
 
 ## Contributing
 
