@@ -15,32 +15,29 @@ Then `bundle`
 
 1. Require the library
 
-    ```
-    require 'ndc-client'
-
-    ```
+    `require 'ndc-client'`
 
 2. Create a client instance using a valid NDC config
  
 YAML config:
-    ```
+
     provider:
         iata-code: AA
         label: American Airlines
-
     options:
         travelAgency:
         name: Flyiin
         agencyID: test agent
         IATA_Number: '0000XXXX'
-    ```
 
-    ```
-    config = YAML.load('config/ndc.yml')
-    ndc_client = NDCClient::Base.new(config)
-    query_params = {departure_airport_code: 'JFK', arrival_airport_code: 'LHR', departure_date: '2015-09-01'} 
-    ndc_response = ndc_client.request(:AirShopping, query_params)
-    ```
+Request example
+
+```
+config = YAML.load('config/ndc.yml')
+ndc_client = NDCClient::Base.new(config)
+query_params = {departure_airport_code: 'JFK', arrival_airport_code: 'LHR', departure_date: '2015-09-01'} 
+ndc_response = ndc_client.request(:AirShopping, query_params)
+```
 
 This should deliver a valid set of NDC Offers if the config is OK.
 
