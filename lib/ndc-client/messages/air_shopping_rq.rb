@@ -59,13 +59,6 @@ module NDCClient
                           }
                         }
                       }
-                      xml.Preference {
-                        xml.CabinPreferences {
-                          xml.CabinType {
-                            xml.Code_ 5
-                          }
-                        }
-                      }
                     }
                     xml.Metadata {
                       xml.Other {
