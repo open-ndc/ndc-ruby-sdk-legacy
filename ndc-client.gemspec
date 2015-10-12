@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A Ruby wrapper for IATA's NDC}
   gem.summary       = %q{A Ruby wrapper for IATA's NDC}
   gem.homepage      = ""
-  gem.files         = ["lib/ndc-client.rb"]
+  gem.files         = Dir["lib/**/*"]
   gem.require_paths = ["lib"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
